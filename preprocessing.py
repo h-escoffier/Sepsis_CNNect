@@ -31,7 +31,7 @@ def preprocess(df_p, med_list,):
     # Handle NAN values
     nb_column = 0
     for columns in df_p:
-        df_p[columns].fillna(value=round(df_p[columns].median(), 2), inplace=True)
+        df_p[columns].fillna(value=round(df_p[columns].median(), 2), inplace=True)  # Round 2
         if np.isnan(df_p[columns][1]):
             df_p[columns] = med_list[nb_column]
         nb_column += 1
@@ -39,13 +39,17 @@ def preprocess(df_p, med_list,):
     return df_p
 
 
-def main(training_folder):
+def main(training_folder, new_training_folder):
     for p_file in os.listdir(training_folder):
         p_name = p_file.split('.')[0]
         df_p = p_reader(training_folder, p_file)
         list_med = collect_median('Median_Training_SetA.txt')
         df_p = preprocess(df_p, list_med)
-        df_p.to_csv(p_name + '.csv', index=False)
+        try:
+            os.mkdir(new_training_folder)
+        except OSError:
+            pass
+        df_p.to_csv(new_training_folder + '/' + p_name + '.csv', index=False)
 
 
-main('afac')
+main('afac', 'new_afac')
