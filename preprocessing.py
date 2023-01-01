@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+from tqdm import tqdm
 
 
 def p_reader(folder, file):
@@ -27,7 +28,7 @@ def collect_median(median_file):
     return med_list
 
 
-def preprocess(df_p, med_list,):
+def missing_values(df_p, med_list):
     # Handle NAN values
     nb_column = 0
     for columns in df_p:
@@ -39,12 +40,25 @@ def preprocess(df_p, med_list,):
     return df_p
 
 
+def normalization(df_p):
+    columns_to_normalize = ['HR', 'O2Sat', 'Temp', 'SBP', 'MAP', 'DBP', 'Resp', 'BaseExcess', 'HCO3', 'FiO2', 'pH',
+                            'PaCO2', 'SaO2', 'AST', 'BUN', 'Alkalinephos', 'Calcium', 'Chloride', 'Creatinine',
+                            'Bilirubin_direct', 'Glucose', 'Lactate', 'Magnesium', 'Phosphate', 'Potassium', 'Bilirubin_total',
+                            'TroponinI', 'Hct', 'Hgb', 'PTT', 'WBC', 'Fibrinogen', 'Platelets', 'Age', 'HospAdmTime',
+                            'ICULOS']
+    df_subset = df_p[columns_to_normalize]
+    df_normalized = df_subset.apply(lambda x: (x - x.mean()) / x.std())
+    df_p[columns_to_normalize] = df_normalized
+    return df_p
+
+
 def main(training_folder, new_training_folder):
-    for p_file in os.listdir(training_folder):
+    for p_file in tqdm(iterable=os.listdir(training_folder), desc=training_folder):
         p_name = p_file.split('.')[0]
         df_p = p_reader(training_folder, p_file)
         list_med = collect_median('Median_Training_SetA.txt')
-        df_p = preprocess(df_p, list_med)
+        df_p = missing_values(df_p, list_med)
+        df_p = normalization(df_p)
         try:
             os.mkdir(new_training_folder)
         except OSError:
