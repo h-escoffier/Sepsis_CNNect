@@ -6,7 +6,9 @@ Build a 1-D CNN to accurately predict sepsis using clinical data.
 The 1-D CNN should be able to capture information in the temporality of the different measures for a single patient.
 
 ### Dataset:
+The data for this study was obtained from two geographically distinct U.S. hospital systems with two different electronic medical record systems: Beth Israel Deaconess Medical Center and Emory University Hospital. These data were collected over the past decade with approval from the appropriate Institutional Review Boards and contained labels for 40,336 patients from the two hospital systems.
 
+The data consists of a combination of hourly vital sign summaries, lab values, and static patient descriptions, including a total of 40 clinical variables: 8 vital sign variables, 26 laboratory variables, and 6 demographic variables (Table 1). Altogether, these data include over 2.5 million hourly time windows and 15 million data points.
 
 ### Preprocessing:
 First part of the preprocess is to be done in the Preprocess_CNN_ML iPython notebook (most of the useful code is in bash).
