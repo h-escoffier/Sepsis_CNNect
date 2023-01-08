@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 from tqdm import tqdm
-
+import random
 
 def p_reader(folder, file):
     """
@@ -52,13 +52,42 @@ def normalization(df_p):
     return df_p
 
 
-def main(training_folder, new_training_folder):
+def adjust_df_size(df_p, m):
+    # Get the current number of rows in the dataframe
+    n = len(df_p)
+    # If the dataframe has less than m rows
+    if n < m:
+        # Calculate how many rows we need to add
+        num_rows_to_add = m - n
+        # Get a list of the current row indices
+        row_indices = list(df_p.index)
+        # Choose num_rows_to_add random row indices to duplicate
+        # rows_to_duplicate = random.sample(row_indices, num_rows_to_add)
+        rows_to_duplicate = random.choices(row_indices, k=num_rows_to_add)
+        # Duplicate the rows and add them to the dataframe
+        for i in rows_to_duplicate:
+            df_p = df_p.append(df_p.loc[i, :], ignore_index=False)
+            df_p = df_p.sort_index()
+    # If the dataframe has more than m rows
+    if n > m:
+        # Calculate how many rows we need to remove
+        num_rows_to_remove = n - m
+        # Choose num_rows_to_remove random row indices to remove
+        rows_to_remove = random.sample(range(n), num_rows_to_remove)
+        # Drop the rows from the dataframe
+        df_p = df_p.drop(rows_to_remove)
+
+    return df_p
+
+
+def main(training_folder, new_training_folder, nb_lines_mean):
     for p_file in tqdm(iterable=os.listdir(training_folder), desc=training_folder):
         p_name = p_file.split('.')[0]
         df_p = p_reader(training_folder, p_file)
         list_med = collect_median('Median_Training_SetA.txt')
         df_p = missing_values(df_p, list_med)
         df_p = normalization(df_p)
+        df_p = adjust_df_size(df_p, nb_lines_mean)
         try:
             os.mkdir(new_training_folder)
         except OSError:
@@ -66,4 +95,4 @@ def main(training_folder, new_training_folder):
         df_p.to_csv(new_training_folder + '/' + p_name + '.csv', index=False)
 
 
-main('afac', 'new_afac')
+main('Training_SetA', 'Pp_Trainig_SetA', 40)
