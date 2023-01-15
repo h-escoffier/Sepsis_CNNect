@@ -18,6 +18,7 @@ It can also be used to detect which columns to discard based on non-existant dat
 Secondly, the preprocessing.py script:
 - Replaces NAs by the median value of all measures of a variable in a patient if they exist. Otherwise, NAs are replaced by the median of the whole dataset.
 - Normalises continuously quantitative columns.
+- The (raw & pre-processed) data are available here : https://drive.google.com/drive/folders/1YE0Y4uAyTeIasJn7KAPDkmJdVs246Xcc?usp=share_link
 
 Thirdly, the `get_data.ipynb`and `get_generators.ipynb` notebooks:
 - You need to have a directory containing the normalised patient records (one .csv per patient) in the parent directory of this repo
