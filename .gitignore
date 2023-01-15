@@ -1,10 +1,21 @@
 /attempt.ipynb
 /model_script.py
+/model.ipynb
 /DataGenerator.ipynb
-/data.csv
-/Tuning/
+/Tuner/
 
 /.ipynb_checkpoints/
 /attempt2.ipynb
 /plot.py
 /model_2.ipynb
+
+/FirstPredictor/
+/SepsisPredictor2/
+/SepsisPredictor/
+/interpreter.ipynb
+/optimisation.py
+/Training_SetA/
+
+
+/data.csv
+/test_data.csv
