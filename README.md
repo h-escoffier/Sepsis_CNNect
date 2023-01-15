@@ -19,10 +19,17 @@ Secondly, the preprocessing.py script:
 - Replaces NAs by the median value of all measures of a variable in a patient if they exist. Otherwise, NAs are replaced by the median of the whole dataset.
 - Normalises continuously quantitative columns.
 
+Thirdly, the `get_data.ipynb`and `get_generators.ipynb` notebooks:
+- You need to have a directory containing the normalised patient records (one .csv per patient) in the parent directory of this repo
+- They will create .csv files that are used by the model to create the batches 
+
 ### CNN model:
+- `model_final.ipynb`contains the final 1D-CNN model
+- Hyperparameter optimisation is achieved through Hyperband, implemented in the keras-tuner package
+- The test results are stored in `/Tuning/sepsis_hyperparam/`
+- At the end of the script, the model is loaded and predictions for one batch of the test data set are made
 
 ### Results:
-
-### Discussion:
-
-### References:
+- Optimised learning rate is 0.0121
+- Result metrics on the training and validation data are loss: 0.5 and accuracy: 91.07%
+- Finally, test accuracy is 97.61%
