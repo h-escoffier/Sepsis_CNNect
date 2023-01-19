@@ -1,5 +1,6 @@
 # Sepsis_CNNect
-## M2 GENIOMHE - HE, DF, NG
+
+by  Hugues  Esc_, davidfdr99, OGrondin
 
 ### Aim:
 Build a 1-D CNN to accurately predict sepsis using clinical data.
@@ -11,11 +12,11 @@ The data for this study was obtained from two geographically distinct U.S. hospi
 The data consists of a combination of hourly vital sign summaries, lab values, and static patient descriptions, including a total of 40 clinical variables: 8 vital sign variables, 26 laboratory variables, and 6 demographic variables (Table 1). Altogether, these data include over 2.5 million hourly time windows and 15 million data points.
 
 ### Preprocessing:
-First part of the preprocess is to be done in the Preprocess_CNN_ML iPython notebook (most of the useful code is in bash).
+First part of preprocess is to be done in the Preprocess_CNN_ML iPython notebook (most of the useful code is in bash).
 This notebook allows concatenation of all patients' data into one file as well as computation of the median for each variable on the whole dataset.
-It can also be used to detect which columns to discard based on non-existant data.
+It can also be used to detect which columns to discard based on non-existent data.
 
-Secondly, the preprocessing.py script:
+Secondly, the `preprocessing.py` script:
 - Replaces NAs by the median value of all measures of a variable in a patient if they exist. Otherwise, NAs are replaced by the median of the whole dataset.
 - Normalises continuously quantitative columns.
 - The (raw & pre-processed) data are available here : https://drive.google.com/drive/folders/1YE0Y4uAyTeIasJn7KAPDkmJdVs246Xcc?usp=share_link
